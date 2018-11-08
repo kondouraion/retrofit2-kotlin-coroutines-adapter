@@ -15,6 +15,7 @@
  */
 package com.jakewharton.retrofit2.adapter.kotlin.coroutines
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
@@ -87,7 +88,7 @@ class CoroutineCallAdapterFactory private constructor() : CallAdapter.Factory() 
       val deferred = CompletableDeferred<T>()
 
       deferred.invokeOnCompletion {
-        if (deferred.isCancelled) {
+        if (it is CancellationException) {
           call.cancel()
         }
       }
