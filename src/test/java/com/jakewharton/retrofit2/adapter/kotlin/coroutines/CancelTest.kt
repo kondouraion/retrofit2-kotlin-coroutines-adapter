@@ -36,7 +36,7 @@ class CancelTest {
     val deferred = adapter.adapt(call)
     call.completeWithException(IOException())
     assertFalse(call.isCanceled)
-    assertTrue(deferred.isCompletedExceptionally)
+    assertTrue(deferred.getCompletionExceptionOrNull() is IOException)
   }
 
   @Test fun cancelOnCancel() {
